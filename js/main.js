@@ -2,7 +2,7 @@
 (function(){
   const userRaw = sessionStorage.getItem('sitta_user');
   if(!userRaw){
-    // not logged in -> go to login
+        // not logged in -> go to login
     window.location.href = 'index.html';
     return;
   }
@@ -79,12 +79,11 @@ if (menuToggle && sidebar) {
   const user = JSON.parse(userRaw);
   const role = user.role ? user.role.toLowerCase() : 'user';
   const container = document.getElementById('dynamicSection');
-  const lastDO = localStorage.getItem('sitta_last_do');
 
-  // Hapus isi lama dulu
+  
   container.innerHTML = '';
 
-  // === ADMIN ===
+  // === ADMIN: tampilkan notifikasi pesanan masuk ===
   if(role === 'administrator'){
     container.innerHTML = `
       <section class="card highlight">
@@ -95,19 +94,33 @@ if (menuToggle && sidebar) {
         </div>
       </section>
     `;
+    return;
   }
 
-  // === USER BIASA ===
-  else if(lastDO){
-    container.innerHTML = `
-      <section class="card highlight">
-        <h3>Nomor DO Terbaru</h3>
-        <div style="background:linear-gradient(90deg,#0055aa,#007bff);color:white;border-radius:12px;padding:20px;text-align:center;margin-top:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15)">
-          <p style="font-size:1rem;margin:0;">Nomor DO Anda:</p>
-          <h2 style="margin:8px 0;color:#fff;">#${lastDO}</h2>
-          <p style="opacity:0.85;font-style:italic;">Terima kasih! Pesanan Anda telah berhasil dibuat 🎉</p>
-        </div>
-      </section>
-    `;
+  // === USER: cek DO berdasarkan akun ===
+  const allOrders = JSON.parse(localStorage.getItem('sitta_orders') || '[]');
+
+  // Ambil pesanan milik user ini berdasarkan email
+  const userOrders = allOrders.filter(o => o.nama === user.name || o.email === user.email);
+
+  if(userOrders.length === 0){
+    // Belum pernah pesan → tidak tampil apa-apa
+    return;
   }
+
+  // Ambil DO terakhir user ini
+  const lastOrder = userOrders[userOrders.length - 1];
+  const lastDO = lastOrder.nomorDO || lastOrder.no;
+
+  // Tampilkan kartu DO terbaru
+  container.innerHTML = `
+    <section class="card highlight">
+      <h3>Nomor DO Terbaru</h3>
+      <div style="background:linear-gradient(90deg,#0055aa,#007bff);color:white;border-radius:12px;padding:20px;text-align:center;margin-top:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15)">
+        <p style="font-size:1rem;margin:0;">Nomor DO Anda:</p>
+        <h2 style="margin:8px 0;color:#fff;">${lastDO}</h2>
+        <p style="opacity:0.85;font-style:italic;">Terima kasih! Pesanan Anda telah berhasil dibuat 🎉</p>
+      </div>
+    </section>
+  `;
 })();
