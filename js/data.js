@@ -121,7 +121,7 @@ const dataDO = {
   },
 
   "2023005678": {
-    nomorDO: "2023001234",
+    nomorDO: "2023001235",
     nama: "Agus Pranoto",
     status: "Dikirim",
     ekspedisi: "Pos Indonesia",
@@ -160,28 +160,32 @@ const dataDO = {
 // Data Riwayat Pesanan
 
 const dataHistori = [
-    {
-      tanggal: "2025-08-25",
-      nama: "Rina Wulandari",
-      bahan: "Pengantar Ilmu Komunikasi",
-      jumlah: 3,
-      total: 180000,
-      status: "Selesai",
-    },
-    {
-      tanggal: "2025-08-26",
-      nama: "Agus Pranoto",
-      bahan: "Manajemen Keuangan",
-      jumlah: 2,
-      total: 220000,
-      status: "Selesai",
-    },
-    {
-      tanggal: "2025-08-28",
-      nama: "Lina Hartati",
-      bahan: "Mikrobiologi Dasar",
-      jumlah: 1,
-      total: 90000,
-      status: "Proses",
-    },
-  ];
+  {
+    tanggal: "2025-08-25",
+    nama: "Rina Wulandari",
+    bahan: "Pengantar Ilmu Komunikasi",
+    jumlah: 3,
+    total: 180000,
+    status: "Selesai",
+    nomorDO: "2023001234"
+  },
+  {
+    tanggal: "2025-08-26",
+    nama: "Agus Pranoto",
+    bahan: "Manajemen Keuangan",
+    jumlah: 2,
+    total: 220000,
+    status: "Selesai",
+    nomorDO: "2023005678"
+  },
+  {
+    tanggal: "2025-08-28",
+    nama: "Lina Hartati",
+    bahan: "Mikrobiologi Dasar",
+    jumlah: 1,
+    total: 90000,
+    status: "Proses",
+    nomorDO: "2023008910"
+  },
+];
+
