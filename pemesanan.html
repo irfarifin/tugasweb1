@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pemesanan Bahan Ajar - SITTA UT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/pemesanan.css">
+</head>
+<body class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="logo"><h2>SITTA - UT</h2></div>
+      <nav class="menu">
+        <a href="dashboard.html">🏠</a>
+        <a href="stok.html">📦</a>
+        <a href="pemesanan.html" class="active">🛒</a>
+        <a href="tracking.html">🚚</a>
+        <a href="histori.html">🧾</a>
+      </nav>
+    </div>
+    <div class="bottom">
+      <button id="logoutSidebar" class="logout">Keluar</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="brand">🛒 Pemesanan Buku</div>
+      <button id="backBtn" class="btn-back">Kembali</button>
+    </header>
+
+    <section class="card order-form">
+      <h3>Formulir Pemesanan Bahan Ajar</h3>
+      <form id="orderForm">
+        <label for="namaBuku">Pilih Buku:</label>
+        <select id="namaBuku" required></select>
+
+        <label for="jumlah">Jumlah:</label>
+        <input type="number" id="jumlah" min="1" value="1" required>
+
+        <label for="alamat">Alamat Pengiriman:</label>
+        <textarea id="alamat" rows="3" placeholder="Masukkan alamat lengkap..." required></textarea>
+
+        <button type="submit" class="submit-btn">Kirim Pesanan</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Modal Konfirmasi -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <h3>✅ Pesanan Berhasil!</h3>
+      <p>Pesanan Anda telah disimpan dan sedang diproses.</p>
+      <button id="okBtn" class="btn-ok">OK</button>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/pemesanan.js"></script>
+</body>
+</html>

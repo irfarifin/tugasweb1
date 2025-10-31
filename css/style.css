@@ -1,0 +1,36 @@
+/* ================================
+   style.css - global base
+================================== */
+:root {
+  --primary: #003366;
+  --primary-light: #0055aa;
+  --bg: #f5f7fb;
+  --card: #fff;
+  --muted: #6e6e6e;
+  --border: #e6ecf4;
+  --radius: 10px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+input { font-family: inherit; }
+
+/* utilitas umum */
+.muted { color: var(--muted); }
+.small { font-size: 0.9rem; }
+.center { text-align: center; }
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}

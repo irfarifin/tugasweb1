@@ -1,0 +1,267 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .login-logo img {
+      width: 140px;
+      height: auto;
+      box-shadow: none;
+      border: none;
+      border-radius: 0;       
+      background: transparent;
+    }
+
+    @media (max-width: 480px) {
+      .login-logo img {
+        width: 110px;
+      }
+    }
+
+.login-card {
+  max-width: 400px;
+  width: 90%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 30px 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  color: #fff;
+}
+
+.login-card h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  margin-top: 16px;
+}
+
+.login-card label {
+  font-size: 0.9rem;
+  color: #f5f5f5;
+}
+
+.login-card input {
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  outline: none;
+  font-size: 1rem;
+}
+
+.login-card button {
+  padding: 10px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+}
+
+.login-card button:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.login-card .muted {
+  margin-top: 12px;
+  display: block;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+.footer-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  gap: 10px;
+}
+
+.footer-btns button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 500;
+}
+
+/* jarak antar tombol biar seimbang */
+.footer-btns button:first-child {
+  margin-right: 10px;
+}
+
+/* efek hover */
+.footer-btns button:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+
+/* Box dalam modal */
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-content h2 {
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-content button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+#forgotSubmit,
+#registerSubmit {
+  background: #0055aa;
+  color: white;
+}
+
+.close-btn {
+  background: #ccc;
+  color: black;
+}
+
+.close-btn:hover {
+  background: #aaa;
+}
+
+/* Tombol close pojok kanan atas */
+.close-top {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-top:hover {
+  color: black;
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+================================== */
+
+/* Tablet (lebar max 768px) */
+@media (max-width: 768px) {
+  .login-card {
+    max-width: 340px;
+    padding: 25px 20px;
+  }
+
+  .login-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .login-card input,
+  .login-card button {
+    font-size: 0.95rem;
+  }
+}
+
+/* HP (lebar max 480px) */
+@media (max-width: 480px) {
+  body {
+    padding: 20px;
+  }
+
+  .login-card {
+    width: 100%;
+    padding: 20px 15px;
+    box-shadow: none;
+  }
+
+  .login-card h1 {
+    font-size: 1.3rem;
+  }
+
+  .login-card input,
+  .login-card button {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .login-card .muted {
+    font-size: 0.8rem;
+  }
+}

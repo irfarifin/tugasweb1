@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Stok - SITTA UT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/edit-stok.css">
+</head>
+<body class="dashboard-layout">
+    
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="left">
+        <div class="brand">SITTA - UT</div>
+        <div id="greeting" class="greeting">Edit Stok Bahan Ajar</div>
+      </div>
+      <div class="right">
+        <button id="backBtn" class="btn-back">Kembali</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h3>Daftar Bahan Ajar</h3>
+      <table id="stokTable">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Buku</th>
+            <th>Kode</th>
+            <th>Stok</th>
+            <th>Perbarui Stok</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="actions">
+        <button id="saveChanges" class="btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/edit-stok.js"></script>
+</body>
+</html>

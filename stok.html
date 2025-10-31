@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stok - SITTA UT</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/stok.css">
+
+</head>
+<body class="dashboard-layout">
+  <aside class="sidebar">
+    <div>
+      <div class="logo"><h2>SITTA - UT</h2></div>
+      <nav class="menu">
+        <a href="dashboard.html">🏠</a>
+        <a href="stok.html" class="active">📦</a>
+        <a href="tracking.html">🚚</a>
+        <a href="#">📊</a>
+        <a href="histori.html">🧾</a>
+      </nav>
+    </div>
+    <div class="bottom">
+      <button id="logoutSidebar" class="logout">Keluar</button>
+    </div>
+  </aside>
+
+<main class="main-content">
+  <header class="topbar">
+    <div class="brand">📚 Daftar Bahan Ajar</div>
+    <div class="topbar-right">
+    <button id="backBtn" class="btn-back">Kembali</button>
+    <div id="userEmail" class="user-email"></div>
+  </header>
+
+  <h2 class="section-title">Koleksi Buku UT</h2>
+  <div class="stock-container" id="stockContainer">
+    <!-- Buku akan di-render oleh JS -->
+  </div>
+</main>
+
+
+  <script src="js/data.js"></script>
+  <script src="js/stok.js"></script>
+</body>
+</html>

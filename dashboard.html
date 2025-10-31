@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard - SITTA UT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <aside class="sidebar">
+    <div>
+      <div class="logo"><h2>SITTA - UT</h2></div>
+      <nav id="menuContainer" class="menu">
+        <!-- Menu akan diganti otomatis oleh sidebar.js -->
+      </nav>
+    </div>
+    <div class="bottom">
+      <button id="logoutSidebar" class="logout">Keluar</button>
+    </div>
+  </aside>
+
+  <!-- Modal Konfirmasi Logout -->
+  <div id="logoutModal" class="modal-overlay">
+    <div class="modal-box">
+      <h3>Konfirmasi Logout</h3>
+      <p>Apakah Anda yakin ingin keluar dari akun ini?</p>
+      <div class="modal-actions">
+        <button id="cancelLogout" class="btn-cancel">Batal</button>
+        <button id="confirmLogout" class="btn-confirm">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="left">
+        <div class="brand">SITTA - UT</div>
+        <div id="greeting" class="greeting">Selamat pagi, User</div>
+      </div>
+      <div class="right">
+        <div id="userEmail" class="user-email"></div>
+      </div>
+    </header>
+
+    <section class="card highlight">
+      <h3>Ringkasan</h3>
+      <div class="stats">
+        <div class="stat-box">
+          <h4 id="totalJenis">--</h4>
+          <p>Total Jenis Buku</p>
+        </div>
+        <div class="stat-box">
+          <h4 id="totalStok">--</h4>
+          <p>Total Stok Keseluruhan</p>
+        </div>
+        <div class="stat-box">
+          <h4 id="totalDO">--</h4>
+          <p>DO Tervalidasi (Simulasi)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card note">
+      <h3>Catatan</h3>
+      <p class="muted">Ini adalah front-end simulasi untuk tugas praktik. Semua data berasal dari file JS (data.js).</p>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/sidebar.js"></script> <!-- tambahkan ini -->
+  <script src="js/main.js"></script>
+</body>
+</html>
