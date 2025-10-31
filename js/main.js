@@ -1,5 +1,4 @@
-// Tampilan Dashboard
-
+// === DASHBOARD ===
 (function(){
   const userRaw = sessionStorage.getItem('sitta_user');
   if(!userRaw){
@@ -8,12 +7,12 @@
     return;
   }
 
-  // Ucapan greeting ke user
+
   const user = JSON.parse(userRaw);
   const greetingEl = document.getElementById('greeting');
   const emailEl = document.getElementById('userEmail');
 
-  // Kustomisasi pagi, siang dan malam
+  // === GREETING OTOMATIS ===
   const hour = new Date().getHours();
   let greet = 'Selamat datang';
   let icon = '👋';
@@ -22,51 +21,39 @@
   else if(hour>=15 && hour<18){greet='Selamat sore';icon='🌇'}
   else {greet='Selamat malam';icon='🌙'}
 
-  if(greetingEl) greetingEl.textContent = `${icon} ${greet}, ${user.name}`;
-  if(emailEl) emailEl.textContent = user.email;
+  greetingEl.textContent = `${icon} ${greet}, ${user.name}`;
+  emailEl.textContent = user.email;
 
-  // Ringkasan
+  // === RINGKASAN ===
   document.getElementById('totalJenis').textContent = dataBahanAjar.length;
-  document.getElementById('totalStok').textContent = dataBahanAjar.reduce((s,b)=>s+(Number(b.stok)||0),0);
+  document.getElementById('totalStok').textContent = dataBahanAjar.reduce((sum,b)=>sum+(Number(b.stok)||0),0);
   document.getElementById('totalDO').textContent = dataDO.length;
 
-  // Popup Logout
-const logoutModal = document.getElementById("logoutModal");
-const confirmLogout = document.getElementById("confirmLogout");
-const cancelLogout = document.getElementById("cancelLogout");
+  // === LOGOUT POPUP ===
+  const logoutModal = document.getElementById("logoutModal");
+  const confirmLogout = document.getElementById("confirmLogout");
+  const cancelLogout = document.getElementById("cancelLogout");
 
-function showLogoutModal() {
-  logoutModal.classList.add("active");
-}
+  function showLogoutModal(){ logoutModal.classList.add("active"); }
+  function hideLogoutModal(){ logoutModal.classList.remove("active"); }
+  function doLogout(){
+    sessionStorage.removeItem('sitta_user');
+    window.location.href = 'index.html';
+  }
 
-function hideLogoutModal() {
-  logoutModal.classList.remove("active");
-}
-
-function doLogout() {
-  sessionStorage.removeItem('sitta_user');
-  window.location.href = 'index.html';
-}
-
-// Tombol konfirmasi
-if(confirmLogout) confirmLogout.addEventListener('click', doLogout);
-if(cancelLogout) cancelLogout.addEventListener('click', hideLogoutModal);
-
-// Tombol logout utama (sidebar)
-['logoutBtn', 'logoutSidebar', 'logoutTop'].forEach(id => {
-  const btn = document.getElementById(id);
-  if(btn) btn.addEventListener('click', showLogoutModal);
-});
-
-
+  if(confirmLogout) confirmLogout.addEventListener('click', doLogout);
+  if(cancelLogout) cancelLogout.addEventListener('click', hideLogoutModal);
+  const logoutSidebar = document.getElementById('logoutSidebar');
+  if(logoutSidebar) logoutSidebar.addEventListener('click', showLogoutModal);
 })();
 
-// === SIDEBAR RESPONSIVE TOGGLE ===
+
+// === SIDEBAR TOGGLE ===
 const menuToggle = document.getElementById("menuToggle");
 const sidebar = document.querySelector(".sidebar");
 const overlay = document.createElement("div");
 
-// Buat overlay hitam transparan
+
 overlay.className = "sidebar-overlay";
 document.body.appendChild(overlay);
 
@@ -76,37 +63,51 @@ if (menuToggle && sidebar) {
     overlay.classList.toggle("active");
   });
 
+
   overlay.addEventListener("click", () => {
     sidebar.classList.remove("sidebar-open");
     overlay.classList.remove("active");
   });
 }
 
-// ==== Simulasi menampilkan nomor DO setelah pemesanan ====
 
-// Cek apakah ada nomor DO terbaru tersimpan di localStorage
-const doSection = document.getElementById('doSection');
-const doNumber = document.getElementById('doNumber');
-const savedDO = localStorage.getItem('lastDO');
+// === KONTEN DINAMIS: PESANAN BARU / NOMOR DO ===
+(function(){
+  const userRaw = sessionStorage.getItem('sitta_user');
+  if(!userRaw) return;
 
-if (savedDO) {
-  doSection.style.display = 'block';
-  doNumber.textContent = savedDO;
-}
+  const user = JSON.parse(userRaw);
+  const role = user.role ? user.role.toLowerCase() : 'user';
+  const container = document.getElementById('dynamicSection');
+  const lastDO = localStorage.getItem('sitta_last_do');
 
-// Fungsi untuk membuat DO baru (misalnya setelah pemesanan)
-function generateNewDO() {
-  const randomNum = Math.floor(1000 + Math.random() * 9000);
-  const newDO = `#DO-${randomNum}`;
-  localStorage.setItem('lastDO', newDO);
+  // Hapus isi lama dulu
+  container.innerHTML = '';
 
-  // tampilkan di dashboard
-  doNumber.textContent = newDO;
-  doSection.style.display = 'block';
+  // === ADMIN ===
+  if(role === 'administrator'){
+    container.innerHTML = `
+      <section class="card highlight">
+        <h3>Pesanan Masuk</h3>
+        <div style="background:linear-gradient(90deg,#004aad,#007bff);color:white;border-radius:12px;padding:18px;text-align:center;margin-top:10px;box-shadow:0 4px 10px rgba(0,0,0,0.15)">
+          <h2 style="margin:0;font-weight:700;">📦 Ada Pesanan Baru!</h2>
+          <p style="margin:6px 0 0;">Harap segera diproses melalui menu <b>Riwayat Pemesanan</b>.</p>
+        </div>
+      </section>
+    `;
+  }
 
-  // animasi cantik
-  doSection.style.animation = 'fadeIn 0.6s ease';
-}
-
-// contoh trigger setelah pesanan dibuat
-// kamu bisa panggil `generateNewDO()` dari file pemesanan.js setelah pesanan selesai.
+  // === USER BIASA ===
+  else if(lastDO){
+    container.innerHTML = `
+      <section class="card highlight">
+        <h3>Nomor DO Terbaru</h3>
+        <div style="background:linear-gradient(90deg,#0055aa,#007bff);color:white;border-radius:12px;padding:20px;text-align:center;margin-top:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15)">
+          <p style="font-size:1rem;margin:0;">Nomor DO Anda:</p>
+          <h2 style="margin:8px 0;color:#fff;">#${lastDO}</h2>
+          <p style="opacity:0.85;font-style:italic;">Terima kasih! Pesanan Anda telah berhasil dibuat 🎉</p>
+        </div>
+      </section>
+    `;
+  }
+})();

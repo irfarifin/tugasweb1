@@ -15,7 +15,9 @@
     <div>
       <div class="logo"><h2>SITTA - UT</h2></div>
       <nav id="menuContainer" class="menu">
-        <!-- Menu akan diganti otomatis oleh sidebar.js -->
+        <a href="dashboard.html" class="active">🏠 Dashboard</a>
+        <a href="edit-stok.html">📚 Edit Stok</a>
+        <a href="histori.html">🧾 Riwayat Pemesanan</a>
       </nav>
     </div>
     <div class="bottom">
@@ -40,13 +42,14 @@
     <header class="topbar">
       <div class="left">
         <div class="brand">SITTA - UT</div>
-        <div id="greeting" class="greeting">Selamat pagi, User</div>
+        <div id="greeting" class="greeting">Selamat datang, User</div>
       </div>
       <div class="right">
         <div id="userEmail" class="user-email"></div>
       </div>
     </header>
 
+    <!-- RINGKASAN -->
     <section class="card highlight">
       <h3>Ringkasan</h3>
       <div class="stats">
@@ -64,25 +67,22 @@
         </div>
       </div>
     </section>
-    <section class="card do-section" id="doSection" style="display:none;">
-      <h3>Nomor DO Terbaru</h3>
-      <div class="do-card">
-        <div class="do-info">
-          <p>Nomor DO Anda:</p>
-          <h2 id="doNumber">#DO-0000</h2>
-          <p class="muted1">Terima kasih! Pesanan Anda telah berhasil dibuat 🎉</p>
-        </div>
-      </div>
-    </section>
 
+    <!-- KARTU DINAMIS (Pesanan baru / Nomor DO terbaru) -->
+    <section id="dynamicSection"></section>
+
+    <!-- CATATAN -->
     <section class="card note">
       <h3>Catatan</h3>
-      <p class="muted">Ini adalah front-end simulasi untuk tugas praktik. Semua data berasal dari file JS (data.js).</p>
+      <p class="muted">
+        Ini adalah front-end simulasi untuk tugas praktik. Semua data berasal dari file JS (<b>data.js</b>).
+      </p>
     </section>
   </main>
 
+  <!-- SCRIPTS -->
   <script src="js/data.js"></script>
-  <script src="js/sidebar.js"></script> <!-- tambahkan ini -->
+  <script src="js/sidebar.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
