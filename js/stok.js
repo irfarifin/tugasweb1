@@ -8,8 +8,9 @@
   const user = JSON.parse(userRaw);
   const container = document.getElementById('stockContainer');
 
-  // Ambil dataBahanAjar dari file data.js
-  const books = dataBahanAjar.map(item => ({
+  // Ambil data stok dari localStorage kalau ada, kalau tidak ambil dari data.js
+  const storedData = JSON.parse(localStorage.getItem('sitta_stok'));
+  const books = (storedData || dataBahanAjar).map(item => ({
     judul: item.namaBarang,
     jenisBarang: item.jenisBarang,
     stok: item.stok,
@@ -41,7 +42,7 @@
       container.appendChild(card);
     });
 
-    // Tambahkan event listener ke tombol pesan
+    // Event untuk tombol pesan
     document.querySelectorAll('.pesan-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const judul = e.target.dataset.judul;

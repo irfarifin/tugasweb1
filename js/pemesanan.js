@@ -11,8 +11,11 @@
   const modal = document.getElementById('confirmModal');
   const okBtn = document.getElementById('okBtn');
 
-  // === Isi dropdown dari dataBahanAjar ===
-  dataBahanAjar.forEach(b => {
+  // === Ambil stok terkini dari localStorage (jika ada) ===
+  const stokData = JSON.parse(localStorage.getItem('sitta_stok')) || dataBahanAjar;
+
+  // === Isi dropdown dari stok terkini ===
+  stokData.forEach(b => {
     const opt = document.createElement('option');
     opt.value = b.namaBarang;
     opt.textContent = `${b.namaBarang} (Stok: ${b.stok})`;
@@ -29,6 +32,17 @@
 
     if(!buku || !jumlah || !alamat){
       alert('⚠️ Lengkapi semua data pesanan!');
+      return;
+    }
+
+    // Cek stok cukup atau tidak
+    const selectedBook = stokData.find(b => b.namaBarang === buku);
+    if(!selectedBook){
+      alert('❌ Buku tidak ditemukan.');
+      return;
+    }
+    if(selectedBook.stok < jumlah){
+      alert(`⚠️ Stok tidak cukup! Stok tersedia: ${selectedBook.stok}`);
       return;
     }
 
@@ -61,6 +75,15 @@
     const orders = JSON.parse(localStorage.getItem('sitta_orders') || '[]');
     orders.push(newOrder);
     localStorage.setItem('sitta_orders', JSON.stringify(orders));
+
+    // === Kurangi stok buku ===
+    const updatedStok = stokData.map(item => {
+      if(item.namaBarang === buku){
+        return { ...item, stok: item.stok - jumlah };
+      }
+      return item;
+    });
+    localStorage.setItem('sitta_stok', JSON.stringify(updatedStok));
 
     // Simpan DO terakhir untuk tracking otomatis
     localStorage.setItem('sitta_last_do', nomorDO);
