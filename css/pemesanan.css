@@ -1,3 +1,4 @@
+/* Tombol Back */
 .btn-back {
   background-color: #0a66c2;
   color: #fff;
@@ -13,6 +14,7 @@
   background-color: #084a8b;
 }
 
+/* Kolom Pemesanan */
 .order-form {
   max-width: 500px;
   margin: 30px auto;
@@ -36,6 +38,7 @@
   font-size: 1rem;
 }
 
+/* Tombol Pesan Sekarang */
 .submit-btn {
   margin-top: 20px;
   width: 100%;
@@ -53,7 +56,7 @@
   background: var(--primary-light);
 }
 
-/* Modal gaya ala Bootstrap */
+/* Popup Pemesanan Sukses */
 .modal {
   display: none;
   position: fixed;
@@ -78,6 +81,7 @@
   color: var(--primary);
 }
 
+/* Tombol OK */
 .btn-ok {
   background: var(--primary);
   color: #fff;

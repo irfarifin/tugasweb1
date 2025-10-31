@@ -63,28 +63,6 @@
 
   <script src="js/index.js"></script>
   <script src="js/data.js"></script>
-  <script>
-    // Tombol buka modal
-    document.getElementById("forgotBtn").onclick = () => {
-      document.getElementById("forgotModal").style.display = "flex";
-    };
-    document.getElementById("registerBtn").onclick = () => {
-      document.getElementById("registerModal").style.display = "flex";
-    };
-
-    // Tombol tutup modal
-    const closeForgot = () => document.getElementById("forgotModal").style.display = "none";
-    const closeRegister = () => document.getElementById("registerModal").style.display = "none";
-
-    document.getElementById("closeForgot").onclick = closeForgot;
-    document.getElementById("closeForgot2").onclick = closeForgot;
-    document.getElementById("closeRegister").onclick = closeRegister;
-    document.getElementById("closeRegister2").onclick = closeRegister;
-
-    // Tutup modal bila klik area luar
-    window.onclick = (event) => {
-      if (event.target.classList.contains("modal")) event.target.style.display = "none";
-    };
-  </script>
+  
 </body>
 </html>

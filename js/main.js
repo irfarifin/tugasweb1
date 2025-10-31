@@ -1,4 +1,5 @@
-/* main.js - dashboard */
+// Tampilan Dashboard
+
 (function(){
   const userRaw = sessionStorage.getItem('sitta_user');
   if(!userRaw){
@@ -7,10 +8,12 @@
     return;
   }
 
+  // Ucapan greeting ke user
   const user = JSON.parse(userRaw);
   const greetingEl = document.getElementById('greeting');
   const emailEl = document.getElementById('userEmail');
 
+  // Kustomisasi pagi, siang dan malam
   const hour = new Date().getHours();
   let greet = 'Selamat datang';
   let icon = '👋';
@@ -22,12 +25,12 @@
   if(greetingEl) greetingEl.textContent = `${icon} ${greet}, ${user.name}`;
   if(emailEl) emailEl.textContent = user.email;
 
-  // === Summary data ===
+  // Ringkasan
   document.getElementById('totalJenis').textContent = dataBahanAjar.length;
   document.getElementById('totalStok').textContent = dataBahanAjar.reduce((s,b)=>s+(Number(b.stok)||0),0);
   document.getElementById('totalDO').textContent = dataDO.length;
 
-  // === Logout dengan modal konfirmasi ===
+  // Popup Logout
 const logoutModal = document.getElementById("logoutModal");
 const confirmLogout = document.getElementById("confirmLogout");
 const cancelLogout = document.getElementById("cancelLogout");
@@ -49,7 +52,7 @@ function doLogout() {
 if(confirmLogout) confirmLogout.addEventListener('click', doLogout);
 if(cancelLogout) cancelLogout.addEventListener('click', hideLogoutModal);
 
-// Tombol logout utama (sidebar/topbar)
+// Tombol logout utama (sidebar)
 ['logoutBtn', 'logoutSidebar', 'logoutTop'].forEach(id => {
   const btn = document.getElementById(id);
   if(btn) btn.addEventListener('click', showLogoutModal);
@@ -78,3 +81,32 @@ if (menuToggle && sidebar) {
     overlay.classList.remove("active");
   });
 }
+
+// ==== Simulasi menampilkan nomor DO setelah pemesanan ====
+
+// Cek apakah ada nomor DO terbaru tersimpan di localStorage
+const doSection = document.getElementById('doSection');
+const doNumber = document.getElementById('doNumber');
+const savedDO = localStorage.getItem('lastDO');
+
+if (savedDO) {
+  doSection.style.display = 'block';
+  doNumber.textContent = savedDO;
+}
+
+// Fungsi untuk membuat DO baru (misalnya setelah pemesanan)
+function generateNewDO() {
+  const randomNum = Math.floor(1000 + Math.random() * 9000);
+  const newDO = `#DO-${randomNum}`;
+  localStorage.setItem('lastDO', newDO);
+
+  // tampilkan di dashboard
+  doNumber.textContent = newDO;
+  doSection.style.display = 'block';
+
+  // animasi cantik
+  doSection.style.animation = 'fadeIn 0.6s ease';
+}
+
+// contoh trigger setelah pesanan dibuat
+// kamu bisa panggil `generateNewDO()` dari file pemesanan.js setelah pesanan selesai.

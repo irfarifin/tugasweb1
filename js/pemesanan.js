@@ -1,20 +1,26 @@
 (function(){
   const userRaw = sessionStorage.getItem('sitta_user');
   if(!userRaw){ 
-    window.location.href='index.html'; 
+    // not logged in -> go to login
+    window.location.href = 'index.html'; 
     return; 
   }
 
   const user = JSON.parse(userRaw);
   const form = document.getElementById('orderForm');
   const select = document.getElementById('namaBuku');
-  const modal = document.getElementById('confirmModal');
-  const okBtn = document.getElementById('okBtn');
 
-  // === Ambil stok terkini dari localStorage (jika ada) ===
+  // === Ambil data akun dari data.js ===
+  // Mencocokkan email user login dengan data akun untuk ambil lokasi
+  const currentAccount = (typeof accounts !== 'undefined')
+    ? accounts.find(acc => acc.email === user.email)
+    : null;
+  const lokasiUser = currentAccount ? currentAccount.lokasi : 'Tidak diketahui';
+
+  // === Ambil stok terkini dari localStorage (atau dataBahanAjar default) ===
   const stokData = JSON.parse(localStorage.getItem('sitta_stok')) || dataBahanAjar;
 
-  // === Isi dropdown dari stok terkini ===
+  // === Isi dropdown buku ===
   stokData.forEach(b => {
     const opt = document.createElement('option');
     opt.value = b.namaBarang;
@@ -28,9 +34,8 @@
 
     const buku = select.value;
     const jumlah = Number(document.getElementById('jumlah').value);
-    const alamat = document.getElementById('alamat').value.trim();
 
-    if(!buku || !jumlah || !alamat){
+    if(!buku || !jumlah){
       alert('⚠️ Lengkapi semua data pesanan!');
       return;
     }
@@ -59,9 +64,9 @@
       total,
       tanggal: new Date().toLocaleDateString('id-ID'),
       status: 'Menunggu Verifikasi',
-      ekspedisi: '-',
+      ekspedisi: 'JNE',
       paket: 'Reguler',
-      lokasi: 'UPBJJ Surabaya',
+      lokasi: lokasiUser, // ← lokasi otomatis dari akun
       catatan: '',
       perjalanan: [
         {
@@ -71,12 +76,12 @@
       ]
     };
 
-    // === Simpan ke localStorage (riwayat pemesanan) ===
+    // Simpan ke localStorage
     const orders = JSON.parse(localStorage.getItem('sitta_orders') || '[]');
     orders.push(newOrder);
     localStorage.setItem('sitta_orders', JSON.stringify(orders));
 
-    // === Kurangi stok buku ===
+    // Kurangi stok buku
     const updatedStok = stokData.map(item => {
       if(item.namaBarang === buku){
         return { ...item, stok: item.stok - jumlah };
@@ -87,6 +92,7 @@
 
     // Simpan DO terakhir untuk tracking otomatis
     localStorage.setItem('sitta_last_do', nomorDO);
+    localStorage.setItem('lastDO', `#${nomorDO}`);
 
     // === Tampilkan popup sukses ===
     showPopupSuccess(nomorDO);
@@ -109,6 +115,7 @@
         <h3>✅ Pemesanan Berhasil!</h3>
         <p>Nomor DO Anda:</p>
         <h2 style="margin:8px 0; color:#007bff">${nomorDO}</h2>
+        <p>Lokasi Pengiriman: <b>${lokasiUser}</b></p>
         <p>Gunakan nomor ini untuk melacak pesanan Anda.</p>
         <div style="display:flex;gap:10px;justify-content:center;margin-top:15px">
           <button id="closePopup">Tutup</button>

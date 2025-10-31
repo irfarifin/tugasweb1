@@ -1,6 +1,7 @@
 (function() {
   const userRaw = sessionStorage.getItem('sitta_user');
   if (!userRaw) { 
+    // not logged in -> go to login
     window.location.href = 'index.html'; 
     return; 
   }

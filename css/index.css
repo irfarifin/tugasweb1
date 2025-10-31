@@ -1,3 +1,4 @@
+/* Layout Dasar */
 body {
   display: flex;
   align-items: center;
@@ -9,27 +10,29 @@ body {
   padding: 0;
 }
 
-    .login-logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .login-logo img {
-      width: 140px;
-      height: auto;
-      box-shadow: none;
-      border: none;
-      border-radius: 0;       
-      background: transparent;
-    }
+/* Logo UT */
+.login-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+  }
+.login-logo img {
+  width: 140px;
+  height: auto;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;       
+  background: transparent;
+  }
 
-    @media (max-width: 480px) {
-      .login-logo img {
-        width: 110px;
-      }
+@media (max-width: 480px) {
+.login-logo img {
+  width: 110px;
     }
+  }
 
+/* Login box */
 .login-card {
   max-width: 400px;
   width: 90%;
@@ -114,16 +117,17 @@ body {
   font-weight: 500;
 }
 
-/* jarak antar tombol biar seimbang */
+
 .footer-btns button:first-child {
   margin-right: 10px;
 }
 
-/* efek hover */
+
 .footer-btns button:hover {
   background: rgba(255, 255, 255, 0.35);
 }
 
+/* Popup Registrasi */
 .modal {
   display: none;
   position: fixed;
@@ -218,9 +222,7 @@ body {
   color: black;
 }
 
-/* ===============================
-   RESPONSIVE DESIGN
-================================== */
+/* Rensponsif */
 
 /* Tablet (lebar max 768px) */
 @media (max-width: 768px) {

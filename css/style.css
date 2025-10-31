@@ -1,6 +1,9 @@
 /* ================================
-   style.css - global base
+
+   === UNIVERSAL CSS DESIGN ===
+
 ================================== */
+
 :root {
   --primary: #003366;
   --primary-light: #0055aa;

@@ -1,4 +1,6 @@
 /* === LOGIN PAGE SCRIPT === */
+
+// Sinkronisasi email dan password ke data.js
 (function(){
   const loginForm = document.getElementById('loginForm');
 
@@ -13,11 +15,13 @@
       return; 
     }
 
+    // Tombol login
     const btn = loginForm.querySelector('button[type="submit"]');
     const oldText = btn.textContent;
     btn.textContent = 'Memeriksa...'; 
     btn.disabled = true;
 
+    // Error time ketika akun tidak ada dalam data
     setTimeout(()=>{
       const user = accounts.find(a =>
         a.email.toLowerCase() === em.toLowerCase() && a.password === pw
@@ -43,6 +47,27 @@
     }, 900);
   });
 
+    // Lupa kata sandi dan registrasi popup
+    document.getElementById("forgotBtn").onclick = () => {
+      document.getElementById("forgotModal").style.display = "flex";
+    };
+    document.getElementById("registerBtn").onclick = () => {
+      document.getElementById("registerModal").style.display = "flex";
+    };
+
+    // Tombol tutup modal
+    const closeForgot = () => document.getElementById("forgotModal").style.display = "none";
+    const closeRegister = () => document.getElementById("registerModal").style.display = "none";
+
+    document.getElementById("closeForgot").onclick = closeForgot;
+    document.getElementById("closeForgot2").onclick = closeForgot;
+    document.getElementById("closeRegister").onclick = closeRegister;
+    document.getElementById("closeRegister2").onclick = closeRegister;
+
+    // Tutup modal bila klik area luar
+    window.onclick = (event) => {
+      if (event.target.classList.contains("modal")) event.target.style.display = "none";
+    };
   // --- Lupa password (simulasi)
   document.getElementById('sendReset').addEventListener('click', ()=>{
     const em = document.getElementById('fpEmail').value;

@@ -1,4 +1,4 @@
-/* === HISTORI PAGE STYLE === */
+/* Layout Dasar */
 body {
   background: linear-gradient(180deg, #0054a6, #003a73);
   color: #fff;
@@ -7,7 +7,7 @@ body {
   padding: 0;
 }
 
-/* --- TOPBAR --- */
+/* Header */
 header.topbar {
   background: linear-gradient(90deg, #003366, #0055aa);
   color: #fff;
@@ -30,6 +30,7 @@ header.topbar {
   font-size: 0.9rem;
 }
 
+/* Tombol Back */
 .btn-back {
   background-color: #0a66c2;
   color: #fff;
@@ -125,7 +126,7 @@ header.topbar {
   color: #fff;
 }
 
-/* --- RESPONSIVE --- */
+/* Responsif */
 @media (max-width: 768px) {
   header.topbar {
     flex-direction: column;

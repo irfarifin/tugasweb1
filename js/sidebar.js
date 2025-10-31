@@ -1,7 +1,8 @@
 (function(){
   const userRaw = sessionStorage.getItem('sitta_user');
   if(!userRaw){
-    window.location.href = 'login.html';
+    // not logged in -> go to login
+    window.location.href = 'index.html';
     return;
   }
 
@@ -53,7 +54,7 @@
   if(confirmLogout){
     confirmLogout.addEventListener('click', () => {
       sessionStorage.removeItem('sitta_user');
-      window.location.href = 'login.html';
+      window.location.href = 'index.html';
     });
   }
 

@@ -1,50 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Edit Stok - SITTA UT</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Stok Buku - SITTA Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
   <link rel="stylesheet" href="css/edit-stok.css">
+
+
 </head>
-<body class="dashboard-layout">
-    
-  <!-- MAIN -->
-  <main class="main-content">
-    <header class="topbar">
-      <div class="left">
-        <div class="brand">SITTA - UT</div>
-        <div id="greeting" class="greeting">Edit Stok Bahan Ajar</div>
-      </div>
-      <div class="right">
-        <button id="backBtn" class="btn-back">Kembali</button>
-      </div>
-    </header>
+<body>
+<header class="topbar">
+  <div class="brand">
+    📚 Edit Stok Buku
+  </div>
+  <div class="topbar-right">
+    <button id="backBtn" class="btn-back">Kembali</button>
+  </div>
+</header>
 
-    <section class="card">
-      <h3>Daftar Bahan Ajar</h3>
-      <table id="stokTable">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Buku</th>
-            <th>Kode</th>
-            <th>Stok</th>
-            <th>Perbarui Stok</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <div class="actions">
-        <button id="saveChanges" class="btn-primary">💾 Simpan Perubahan</button>
-      </div>
-    </section>
+  <h2 class="section-title">Koleksi Buku UT</h2>
+  <main>
+    <div id="stockContainer" class="stock-container"></div>
   </main>
 
   <script src="js/data.js"></script>
-  <script src="js/sidebar.js"></script>
-  <script src="js/edit-stok.js"></script>
+  <script>
+  (function(){
+    const userRaw = sessionStorage.getItem('sitta_user');
+    if(!userRaw){
+      window.location.href = 'index.html';
+      return;
+    }
+
+    const user = JSON.parse(userRaw);
+    if(user.role.toLowerCase() !== 'administrator'){
+      alert('Akses ditolak. Hanya admin yang dapat mengedit stok.');
+      window.location.href = 'dashboard.html';
+      return;
+    }
+
+    const container = document.getElementById('stockContainer');
+    const storedData = JSON.parse(localStorage.getItem('sitta_stok'));
+    const books = (storedData || dataBahanAjar).map(item => ({
+      namaBarang: item.namaBarang,
+      kodeBarang: item.kodeBarang,
+      kodeLokasi: item.kodeLokasi,
+      jenisBarang: item.jenisBarang,
+      edisi: item.edisi,
+      stok: item.stok,
+      cover: item.cover
+    }));
+
+    // Render tampilan kartu stok
+    function renderBooks() {
+      container.innerHTML = '';
+      books.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'stock-card';
+        card.innerHTML = `
+          <img src="${item.cover}" alt="${item.namaBarang}">
+          <div class="stock-card-content">
+            <h3>${item.namaBarang}</h3>
+            <p>Kode Barang: ${item.kodeBarang}</p>
+            <p>Lokasi: ${item.kodeLokasi}</p>
+            <p>Edisi: ${item.edisi}</p>
+            <p>Jenis: ${item.jenisBarang}</p>
+            <p>Stok Saat Ini: <strong>${item.stok}</strong></p>
+            <input type="number" min="0" value="${item.stok}" data-index="${index}" class="stok-input">
+            <button class="update-btn" data-index="${index}">💾 Simpan</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Event untuk setiap tombol simpan
+      document.querySelectorAll('.update-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const idx = e.target.dataset.index;
+          const newVal = document.querySelector(`.stok-input[data-index="${idx}"]`).value;
+          books[idx].stok = Number(newVal);
+          localStorage.setItem('sitta_stok', JSON.stringify(books));
+          showModal("✅ Stok Berhasil Diperbarui", "Perubahan telah disimpan ke sistem.");
+        });
+      });
+    }
+
+    renderBooks();
+
+    // Tombol kembali
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = 'dashboard.html';
+    });
+
+    // Fungsi modal sukses
+    function showModal(title, message) {
+      const modal = document.createElement('div');
+      modal.className = 'modal-overlay';
+      modal.innerHTML = `
+        <div class="modal-box">
+          <h3>${title}</h3>
+          <p>${message}</p>
+          <div class="modal-actions">
+            <button id="okBtn" class="btn-confirm">OK</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.querySelector('#okBtn').addEventListener('click', () => modal.remove());
+    }
+
+  })();
+  </script>
 </body>
 </html>

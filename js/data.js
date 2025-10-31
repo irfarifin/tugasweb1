@@ -1,4 +1,4 @@
-// Data dummy akun login
+// Data Dummy Akun Login
 
 const accounts = [
   {
@@ -121,7 +121,7 @@ const dataDO = {
   },
 
   "2023005678": {
-    nomorDO: "2023001235",
+    nomorDO: "2023005678",
     nama: "Agus Pranoto",
     status: "Dikirim",
     ekspedisi: "Pos Indonesia",
@@ -185,7 +185,8 @@ const dataHistori = [
     jumlah: 1,
     total: 90000,
     status: "Proses",
-    nomorDO: "2023008910"
+    nomorDO: "2023008910" 
+    // DO ditambahkan manual karna di data dummy tidak ada
   },
 ];
 

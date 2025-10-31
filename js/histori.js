@@ -1,7 +1,9 @@
-/* === HISTORI PAGE SCRIPT === */
+// Tampilan Riwayat Pemesanan dari Data dummy + input user
+
 (function () {
   const userRaw = sessionStorage.getItem("sitta_user");
   if (!userRaw) {
+    // not logged in -> go to login
     window.location.href = "index.html";
     return;
   }
@@ -34,14 +36,14 @@
     item.className = "timeline-item";
     const dotClass = trx.status === "Selesai" ? "selesai" : "proses";
 
-    // Cari lokasi berdasarkan nama bahan (kalau ada di dataBahanAjar)
+    // Cari lokasi berdasarkan nama barang (kalau ada di dataBahanAjar)
     let lokasi = "-";
     if (typeof dataBahanAjar !== "undefined") {
       const buku = dataBahanAjar.find((b) => b.namaBarang === trx.bahan);
       if (buku) lokasi = buku.kodeLokasi;
     }
 
-    // === Tambahkan Nomor DO (klik untuk tracking) ===
+    // Tambahkan Nomor DO (Bisa diklik untuk tracking)
     const nomorDO = trx.nomorDO
       ? `<p style="margin-top:6px;font-size:0.9rem;">
           <strong>Nomor DO:</strong> 

@@ -1,7 +1,9 @@
+// Administrator
 (function(){
   const userRaw = sessionStorage.getItem('sitta_user');
   if(!userRaw){
-    window.location.href = 'login.html';
+    // belum login
+    window.location.href = 'index.html';
     return;
   }
 
@@ -12,57 +14,65 @@
     return;
   }
 
-  const tableBody = document.querySelector('#stokTable tbody');
-  const saveBtn = document.getElementById('saveChanges');
+  const container = document.getElementById('stockContainer');
   const backBtn = document.getElementById('backBtn');
 
-  // Ambil data bahan ajar dari localStorage jika ada perubahan sebelumnya
+  // Ambil data bahan ajar
   let bahanAjar = JSON.parse(localStorage.getItem('dataBahanAjar')) || dataBahanAjar;
 
-  // Tampilkan data ke tabel
-  const renderTable = () => {
-    tableBody.innerHTML = '';
+  // Render card per buku
+  const renderCards = () => {
+    container.innerHTML = '';
     bahanAjar.forEach((item, index) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${item.namaBarang}</td>
-        <td>${item.kode || '-'}</td>
-        <td>${item.stok}</td>
-        <td><input type="number" min="0" value="${item.stok}" data-index="${index}" class="stokInput"></td>
+      const card = document.createElement('div');
+      card.className = 'stock-card';
+      card.innerHTML = `
+        <img src="${item.cover}" alt="${item.namaBarang}">
+        <div class="stock-card-content">
+          <h3>${item.namaBarang}</h3>
+          <p>Kode: ${item.kodeBarang}</p>
+          <p>Lokasi: ${item.kodeLokasi}</p>
+          <p>Jenis: ${item.jenisBarang}</p>
+          <p>Edisi: ${item.edisi}</p>
+          <label>Stok:</label>
+          <input type="number" min="0" value="${item.stok}" data-index="${index}" class="stok-input">
+          <button class="update-btn" data-index="${index}">Perbarui</button>
+        </div>
       `;
-      tableBody.appendChild(tr);
+      container.appendChild(card);
+    });
+
+    // Tambahkan event listener ke tombol update
+    document.querySelectorAll('.update-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const idx = e.target.dataset.index;
+        const input = container.querySelector(`.stok-input[data-index="${idx}"]`);
+        const newStok = Number(input.value);
+        bahanAjar[idx].stok = newStok;
+        localStorage.setItem('dataBahanAjar', JSON.stringify(bahanAjar));
+        showSuccessModal();
+      });
     });
   };
 
-  renderTable();
+  renderCards();
 
-  // Simpan perubahan stok
-  saveBtn.addEventListener('click', () => {
-    const inputs = document.querySelectorAll('.stokInput');
-    inputs.forEach(input => {
-      const idx = input.dataset.index;
-      bahanAjar[idx].stok = Number(input.value);
-    });
-
-    localStorage.setItem('dataBahanAjar', JSON.stringify(bahanAjar));
-
-    // Popup sukses
+  // Modal sukses update stok
+  const showSuccessModal = () => {
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
     modal.innerHTML = `
       <div class="modal-box">
         <h3>✅ Stok Berhasil Diperbarui</h3>
-        <p>Perubahan telah disimpan ke sistem.</p>
+        <p>Perubahan stok telah disimpan.</p>
         <div class="modal-actions">
           <button id="okBtn" class="btn-confirm">OK</button>
         </div>
       </div>
     `;
     document.body.appendChild(modal);
-    modal.style.display = 'flex';
     modal.querySelector('#okBtn').addEventListener('click', () => modal.remove());
-  });
+  };
 
   // Tombol kembali
   backBtn.addEventListener('click', ()=>{
