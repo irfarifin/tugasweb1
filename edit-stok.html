@@ -6,112 +6,50 @@
   <title>Edit Stok Buku - SITTA Admin</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
-  <link rel="stylesheet" href="css/edit-stok.css">
+  <link rel="stylesheet" href="css/edit-stok.css" />
+  <style>    
 
-
+  </style>
 </head>
+
 <body>
-<header class="topbar">
-  <div class="brand">
-    📚 Edit Stok Buku
-  </div>
-  <div class="topbar-right">
-    <button id="backBtn" class="btn-back">Kembali</button>
-  </div>
-</header>
+  <header class="topbar">
+    <div class="brand">📚 Edit Stok Buku</div>
+    <div class="topbar-right">
+      <button id="backBtn" class="btn-back">Kembali</button>
+    </div>
+  </header>
 
   <h2 class="section-title">Koleksi Buku UT</h2>
+
   <main>
     <div id="stockContainer" class="stock-container"></div>
   </main>
 
-  <script src="js/data.js"></script>
-  <script>
-  (function(){
-    const userRaw = sessionStorage.getItem('sitta_user');
-    if(!userRaw){
-      window.location.href = 'index.html';
-      return;
-    }
+  <!-- Tombol melayang -->
+  <button id="fabButton" class="fab">+</button>
 
-    const user = JSON.parse(userRaw);
-    if(user.role.toLowerCase() !== 'administrator'){
-      alert('Akses ditolak. Hanya admin yang dapat mengedit stok.');
-      window.location.href = 'dashboard.html';
-      return;
-    }
-
-    const container = document.getElementById('stockContainer');
-    const storedData = JSON.parse(localStorage.getItem('sitta_stok'));
-    const books = (storedData || dataBahanAjar).map(item => ({
-      namaBarang: item.namaBarang,
-      kodeBarang: item.kodeBarang,
-      kodeLokasi: item.kodeLokasi,
-      jenisBarang: item.jenisBarang,
-      edisi: item.edisi,
-      stok: item.stok,
-      cover: item.cover
-    }));
-
-    // Render tampilan kartu stok
-    function renderBooks() {
-      container.innerHTML = '';
-      books.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'stock-card';
-        card.innerHTML = `
-          <img src="${item.cover}" alt="${item.namaBarang}">
-          <div class="stock-card-content">
-            <h3>${item.namaBarang}</h3>
-            <p>Kode Barang: ${item.kodeBarang}</p>
-            <p>Lokasi: ${item.kodeLokasi}</p>
-            <p>Edisi: ${item.edisi}</p>
-            <p>Jenis: ${item.jenisBarang}</p>
-            <p>Stok Saat Ini: <strong>${item.stok}</strong></p>
-            <input type="number" min="0" value="${item.stok}" data-index="${index}" class="stok-input">
-            <button class="update-btn" data-index="${index}">💾 Simpan</button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-
-      // Event untuk setiap tombol simpan
-      document.querySelectorAll('.update-btn').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const idx = e.target.dataset.index;
-          const newVal = document.querySelector(`.stok-input[data-index="${idx}"]`).value;
-          books[idx].stok = Number(newVal);
-          localStorage.setItem('sitta_stok', JSON.stringify(books));
-          showModal("✅ Stok Berhasil Diperbarui", "Perubahan telah disimpan ke sistem.");
-        });
-      });
-    }
-
-    renderBooks();
-
-    // Tombol kembali
-    document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = 'dashboard.html';
-    });
-
-    // Fungsi modal sukses
-    function showModal(title, message) {
-      const modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.innerHTML = `
-        <div class="modal-box">
-          <h3>${title}</h3>
-          <p>${message}</p>
-          <div class="modal-actions">
-            <button id="okBtn" class="btn-confirm">OK</button>
-          </div>
+  <!-- Popup tambah buku -->
+  <div id="addBookModal" class="add-book-modal">
+    <div class="add-book-box">
+      <h3>Tambah Buku Baru</h3>
+      <form id="addBookForm" class="add-book-form">
+        <input type="text" id="kodeBarang" placeholder="Kode Barang (misal: B001)" required />
+        <input type="text" id="judulBuku" placeholder="Judul Buku" required />
+        <input type="text" id="kodeLokasi" placeholder="Kode Lokasi (misal: R01)" required />
+        <input type="text" id="jenisBarang" placeholder="Jenis Barang (misal: Buku)" required />
+        <input type="number" id="edisi" placeholder="Edisi (misal: 3)" required />
+        <input type="number" id="stok" placeholder="Jumlah Stok" required />
+        <input type="url" id="cover" placeholder="URL Cover Buku (opsional)" />
+        <div class="add-book-actions">
+          <button type="button" class="btn-cancel" id="cancelAdd">Batal</button>
+          <button type="submit" class="btn-save">Simpan</button>
         </div>
-      `;
-      document.body.appendChild(modal);
-      modal.querySelector('#okBtn').addEventListener('click', () => modal.remove());
-    }
+      </form>
+    </div>
+  </div>
 
-  })();
-  </script>
+  <script src="js/data.js"></script>
+  <script src="js/edit-stok.js"></script>
 </body>
 </html>

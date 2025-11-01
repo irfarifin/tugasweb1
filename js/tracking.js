@@ -1,4 +1,4 @@
-// === AUTO LOAD DO DARI URL ===
+// === AUTO LOAD DO ===
 window.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const doParam = urlParams.get("do");
